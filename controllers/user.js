@@ -1,11 +1,52 @@
-module.exports = async (ctx, next) => {
-    // 通过 Koa 中间件进行登录态校验之后
-    // 登录信息会被存储到 ctx.state.$wxInfo
-    // 具体查看：
-    if (ctx.state.$wxInfo.loginState === 1) {
-        // loginState 为 1，登录态校验成功
-        ctx.state.data = ctx.state.$wxInfo.userinfo
-    } else {
-        ctx.state.code = -1
-    }
+const DB = require('./dbpool');
+
+// 查询用户
+async function get (ctx, next) {
+    const { id } = ctx.params;
+    let data;
+
+    await DB.raw(`
+        SELECT *
+        FROM tadpole_server.user
+        WHERE id=${id}
+    `).then(res => data = res[0]);
+
+    ctx.set({
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json;charset=UTF-8'
+    });
+
+    ctx.body = JSON.stringify({
+        result: 1,
+        data,
+    });
 }
+
+// 修改用户
+async function post (ctx, next) {
+    const { id } = ctx.params;
+    const { body } = ctx.request;
+
+    await DB.raw(`
+        UPDATE tadpole_server.user
+        SET 
+            ${ body.name ? `name="${body.name}",` : '' }
+            ${ body.profilePictureUrl ? `profile_picture_url="${body.profilePictureUrl}",` : '' }
+            last_update_time=${(new Date()).getTime()}
+        WHERE id=${id}
+    `);
+
+    ctx.set({
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json;charset=UTF-8'
+    });
+
+    ctx.body = JSON.stringify({ result: 1 });
+}
+
+module.exports = {
+    get,
+    post,
+};

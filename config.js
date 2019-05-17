@@ -1,7 +1,7 @@
 const CONF = {
-    port: '5757',
+    port: '2121',
     rootPathname: '',
-    serverHost: '192.168.64.2',
+    serverHost: '127.0.0.1',
 
     /**
      * MySQL 配置
