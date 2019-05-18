@@ -8,4 +8,8 @@ const controllers = require('../controllers')
 router.get('/user/:id', controllers.user.get);
 router.post('/user/:id', controllers.user.post);
 
+// file api
+router.get('/file/:name', controllers.file.get);
+router.post('/file', controllers.user.post);
+
 module.exports = router
