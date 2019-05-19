@@ -1,6 +1,8 @@
 
 # HillArc #
 
+![image](./asset/hillarc-head.jpg)
+
 > HillArc —— 由 WebUnion 开发的、基于 Node.js + MySQL 环境、使用 Koa 框架的服务端架构。
 
 ## 初始化 ##
