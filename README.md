@@ -16,4 +16,5 @@
 ## 运行 ##
 
 1. 执行`npm run dev`即可启动调试模式，任何改动都会实时反应到终端;
-2. 执行`npm run start`可启动生产服务。
+2. 执行`npm run start`可启动生产服务;
+3. 执行`npm run start-crons`可启动定时爬虫任务。
